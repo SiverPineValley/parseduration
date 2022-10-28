@@ -12,7 +12,6 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
 
-    services:
     steps:
       - name: Set Up Go
         uses: actions/setup-go@v3

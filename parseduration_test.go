@@ -61,9 +61,9 @@ func TestParseUnit(t *testing.T) {
 
 func TestParseDuration(t *testing.T) {
 	testCases := []struct {
-		tCase string
-		expected  time.Duration
-		err   error
+		tCase    string
+		expected time.Duration
+		err      error
 	}{
 		{"1d", time.Duration(time.Hour * 24), nil},
 		{"+d", time.Duration(time.Hour * 24), nil},
@@ -74,7 +74,7 @@ func TestParseDuration(t *testing.T) {
 		{"-124ms", time.Duration(time.Millisecond * -124), nil},
 		{"34us", time.Duration(time.Microsecond * 34), nil},
 		{"1ns", time.Duration(time.Nanosecond), nil},
-		{"2w3d12h32m60s172ms1us74ns", time.Duration(time.Hour * 168 * 2 + time.Hour * 24 * 3 + time.Hour * 12 + time.Minute * 32 + time.Second * 60 + time.Millisecond * 172 + time.Microsecond * 1 + time.Nanosecond * 74), nil},
+		{"2w3d12h32m60s172ms1us74ns", time.Duration(time.Hour*168*2 + time.Hour*24*3 + time.Hour*12 + time.Minute*32 + time.Second*60 + time.Millisecond*172 + time.Microsecond*1 + time.Nanosecond*74), nil},
 		{"123", 0, ErrInvalidTimeUnit},
 		{"2d2d", 0, ErrDuplicatedTimeUnit},
 		{"3w4d3h2s3h", 0, ErrDuplicatedTimeUnit},
@@ -89,3 +89,4 @@ func TestParseDuration(t *testing.T) {
 		require.Equal(t, tc.err, e)
 	}
 }
+

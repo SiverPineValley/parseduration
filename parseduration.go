@@ -84,9 +84,6 @@ func parseUnit(s string) (int64, string, error) {
 				return 0, "", ErrInvalidTimeUnit
 			}
 
-			if m == 0 {
-				m = 1
-			}
 			break
 		}
 	}

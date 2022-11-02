@@ -16,7 +16,7 @@ go get https://github.com/SiverPineValley/parseduration
 The standard for parsing is same as time.ParseDuration. You can use `ParseDuration` sending parameters such as `2w3d20h`.
 
 
-Negative numbers are also provided, and if you enter only letters without entering a number, it will be recognized as 1. `d == 1d`
+Negative numbers are also provided, and if you enter only letters without entering a number, it will be recognized as 0. `d == 0d`
 
 
 ## Standard

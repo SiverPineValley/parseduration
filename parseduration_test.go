@@ -41,13 +41,16 @@ func TestParseUnit(t *testing.T) {
 			"123", 0, "", ErrInvalidTimeUnit,
 		},
 		{
-			"-d", -1, "d", nil,
+			"-d", 0, "d", nil,
 		},
 		{
 			"-", 0, "", ErrInvalidTimeUnit,
 		},
 		{
 			"--", 0, "", ErrInvalidTimeUnit,
+		},
+		{
+			"0d", 0, "d", nil,
 		},
 	}
 	for _, tc := range testCases {
@@ -66,7 +69,7 @@ func TestParseDuration(t *testing.T) {
 		err      error
 	}{
 		{"1d", time.Duration(time.Hour * 24), nil},
-		{"+d", time.Duration(time.Hour * 24), nil},
+		{"+d", time.Duration(time.Hour * 0), nil},
 		{"24h", time.Duration(time.Hour * 24), nil},
 		{"2w", time.Duration(time.Hour * 168 * 2), nil},
 		{"30m", time.Duration(time.Minute * 30), nil},
@@ -78,10 +81,12 @@ func TestParseDuration(t *testing.T) {
 		{"123", 0, ErrInvalidTimeUnit},
 		{"2d2d", 0, ErrDuplicatedTimeUnit},
 		{"3w4d3h2s3h", 0, ErrDuplicatedTimeUnit},
-		{"-d", time.Duration(time.Hour * -24), nil},
+		{"-d", time.Duration(time.Hour * 0), nil},
 		{"-", 0, ErrInvalidTimeUnit},
 		{"--", 0, ErrInvalidTimeUnit},
 		{"", 0, ErrInvalidTimeUnit},
+		{"0d", time.Duration(time.Hour * 0), nil},
+
 	}
 	for _, tc := range testCases {
 		d, e := ParseDuration(tc.tCase)

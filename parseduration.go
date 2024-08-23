@@ -25,7 +25,7 @@ var (
 )
 
 func ParseDuration(s string) (d time.Duration, e error) {
-	r1, _ := regexp.Compile("[-+]?[0-9]*[a-z]+")
+	r1, _ := regexp.Compile("[-+]?[0-9]*(ns|us|ms|s|m|h|d|w|M|y)+")
 	parsed := r1.FindAllString(s, -1)
 
 	if len(parsed) == 0 {
@@ -74,6 +74,8 @@ func parseUnit(s string) (int64, string, error) {
 		case c >= '0' && c <= '9':
 			m = m*10 + (int64(c) - '0')
 		case c >= 'a' && c <= 'z':
+			p = s[i:]
+		case c >= 'A' && c <= 'Z':
 			p = s[i:]
 		default:
 			return 0, "", ErrInvalidTimeUnit

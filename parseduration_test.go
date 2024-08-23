@@ -52,6 +52,12 @@ func TestParseUnit(t *testing.T) {
 		{
 			"0d", 0, "d", nil,
 		},
+		{
+			"3M", 3, "M", nil,
+		},
+		{
+			"-5M", -5, "M", nil,
+		},
 	}
 	for _, tc := range testCases {
 		m, p, e := parseUnit(tc.tCase)
@@ -86,7 +92,12 @@ func TestParseDuration(t *testing.T) {
 		{"--", 0, ErrInvalidTimeUnit},
 		{"", 0, ErrInvalidTimeUnit},
 		{"0d", time.Duration(time.Hour * 0), nil},
-
+		{"2M", time.Duration(time.Hour * 2 * 24 * 30), nil},
+		{"-5M", time.Duration(time.Hour * -5 * 24 * 30), nil},
+		{"6y", time.Duration(time.Hour * 6 * 24 * 365), nil},
+		{"-3y", time.Duration(time.Hour * -3 * 24 * 365), nil},
+		{"2M2w3d12h32m60s172ms1us74ns", time.Duration(time.Hour*24*30*2 + time.Hour*168*2 + time.Hour*24*3 + time.Hour*12 + time.Minute*32 + time.Second*60 + time.Millisecond*172 + time.Microsecond*1 + time.Nanosecond*74), nil},
+		{"3y2M2w3d12h32m60s172ms1us74ns", time.Duration(time.Hour*24*365*3 + time.Hour*24*30*2 + time.Hour*168*2 + time.Hour*24*3 + time.Hour*12 + time.Minute*32 + time.Second*60 + time.Millisecond*172 + time.Microsecond*1 + time.Nanosecond*74), nil},
 	}
 	for _, tc := range testCases {
 		d, e := ParseDuration(tc.tCase)
@@ -94,4 +105,3 @@ func TestParseDuration(t *testing.T) {
 		require.Equal(t, tc.err, e)
 	}
 }
-
